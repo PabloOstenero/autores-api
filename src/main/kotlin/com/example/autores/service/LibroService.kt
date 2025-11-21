@@ -2,15 +2,19 @@ package com.example.autores.service
 
 import com.example.autores.domain.Libro
 import com.example.autores.repository.LibroRepository
+import com.example.autores.repository.AutorRepository
 import com.example.autores.web.dto.LibroRequest
 import com.example.autores.web.mapper.LibroMapper
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class LibroService(private val repo: LibroRepository) {
+class LibroService(
+    private val repo: LibroRepository,
+    private val autorRepo: AutorRepository
+) {
 
-     @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     fun list(): List<Libro> = repo.findAll().sortedBy { it.id }
 
     @Transactional(readOnly = true)
@@ -19,13 +23,23 @@ class LibroService(private val repo: LibroRepository) {
 
     @Transactional
     fun create(req: LibroRequest): Libro {
-        return repo.save(LibroMapper.toEntity(req))
+        val autor = autorRepo.findById(req.autorId)
+            .orElseThrow { NotFoundException("Autor id=${req.autorId} no encontrado") }
+
+        val entity = LibroMapper.toEntity(req)
+        entity.autor = autor
+        return repo.save(entity)
     }
 
     @Transactional
     fun update(id: Long, req: LibroRequest): Libro {
         val current = get(id)
-        return repo.save(LibroMapper.merge(current, req))
+        val autor = autorRepo.findById(req.autorId)
+            .orElseThrow { NotFoundException("Autor id=${req.autorId} no encontrado") }
+
+        val merged = LibroMapper.merge(current, req)
+        merged.autor = autor
+        return repo.save(merged)
     }
 
     @Transactional
