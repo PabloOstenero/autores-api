@@ -28,7 +28,7 @@ class RestExceptionHandler {
         val msg = when (ex) {
             is MethodArgumentNotValidException ->
                 ex.bindingResult.fieldErrors.joinToString { "${it.field}: ${it.defaultMessage}" }
-            is HttpMessageNotReadableException -> ex.mostSpecificCause?.message ?: ex.message
+            is HttpMessageNotReadableException -> ex.mostSpecificCause.message ?: ex.message
             else -> ex.message
         }
         return ResponseEntity.badRequest().body(ApiError(400, "VALIDATION_ERROR", msg))
