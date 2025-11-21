@@ -7,8 +7,7 @@ import com.example.autores.web.dto.LibroResponse
 object LibroMapper {
     fun toEntity(req: LibroRequest) =
         Libro(
-            titulo = req.titulo,
-            autor = req.autorId
+            titulo = req.titulo
         )
 
     fun toResponse(libro: Libro): LibroResponse =
@@ -19,7 +18,6 @@ object LibroMapper {
         )
 
     fun merge(entity: Libro, req: LibroRequest) = entity.copy(
-        titulo = req.titulo,
-        autor = req.autorId
+        titulo = req.titulo
     )
 }

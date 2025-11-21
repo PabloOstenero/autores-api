@@ -12,6 +12,6 @@ data class Libro(
     var titulo: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "autor")
+    @JoinColumn(name = "autor_id")
     var autor: Autor? = null
 )

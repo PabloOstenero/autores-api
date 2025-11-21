@@ -6,8 +6,7 @@ import com.example.autores.web.dto.AutorRequest
 
 object AutorMapper {
     fun toEntity(req: AutorRequest) = Autor(
-        nombre = req.nombre,
-        libros = req.libros
+        nombre = req.nombre
     )
 
     fun toResponse(a: Autor) = AutorResponse(
@@ -17,7 +16,6 @@ object AutorMapper {
     )
 
     fun merge(entity: Autor, req: AutorRequest) = entity.copy(
-        nombre = req.nombre,
-        libros = req.libros
+        nombre = req.nombre
     )
 }

@@ -8,5 +8,5 @@ data class LibroRequest(
     @field:NotBlank
     val titulo: String,
 
-    val autorId: Autor? = null  // FK al autor
+    val autorId: Long // FK al autor
 )
