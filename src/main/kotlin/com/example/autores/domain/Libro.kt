@@ -1,12 +1,10 @@
 package com.example.autores.domain
 
 import jakarta.persistence.*
-import com.fasterxml.jackson.annotation.JsonIdentityInfo
-import com.fasterxml.jackson.annotation.ObjectIdGenerators
+import com.fasterxml.jackson.annotation.JsonBackReference
 
 @Entity
 @Table(name = "libros")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
 data class Libro(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,5 +14,6 @@ data class Libro(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "autor_id")
+    @JsonBackReference
     var autor: Autor? = null
 )
