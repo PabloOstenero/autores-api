@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 
+@CrossOrigin(origins = ["http://localhost:8100"])
 @RestController
 @RequestMapping("/api/libros")
 class LibroController(private val service: LibroService) {
